@@ -1,0 +1,2427 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Klix Developer documentation">
+      
+      
+        <meta name="author" content="Klix Development Team">
+      
+      
+      
+        <link rel="prev" href="../libraries/">
+      
+      
+        <link rel="next" href="../payment-methods/">
+      
+      
+      <link rel="icon" href="../images/logos/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.47">
+    
+    
+      
+        <title>Direct integration using API - Klix Developers</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/klix.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+<!-- Klix Pay/Checkout widget -->
+<script type="module" src="https://klix.blob.core.windows.net/public/widget/build/klixwidget.esm.js"></script>
+<script nomodule src="https://klix.blob.core.windows.net/public/widget/build/klixwidget.js"></script>
+<!-- Klix Pay Later widget -->
+<script type="module" src="https://klix.blob.core.windows.net/public/pay-later-widget/build/klix-pay-later-widget.esm.js"></script>
+<script nomodule="" src="https://klix.blob.core.windows.net/public/pay-later-widget/build/klix-pay-later-widget.js"></script>
+<!-- Klix Pay Later widget with adjustable down-payment amount -->
+<script type="module" src="https://klix.blob.core.windows.net/public/pay-later-calculator-widget/build/klix-widget.esm.js"></script>
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/9008822.js"></script>
+<!-- End of HubSpot Embed Code -->
+
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="klix-theme-primary" data-md-color-accent="klix-theme-accent">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#klix-api" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Klix Developers" class="md-header__button md-logo" aria-label="Klix Developers" data-md-component="logo">
+      
+  <img src="../images/logos/klix-by-citadele-square.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Klix Developers
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Direct integration using API
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/klix-app/klix-developer-documentation-website" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    klix-app/klix-developer-documentation-website
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Klix Developers" class="md-nav__button md-logo" aria-label="Klix Developers" data-md-component="logo">
+      
+  <img src="../images/logos/klix-by-citadele-square.png" alt="logo">
+
+    </a>
+    Klix Developers
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/klix-app/klix-developer-documentation-website" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    klix-app/klix-developer-documentation-website
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../test-environment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Test environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugins-for-ecommerce-platforms/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Plugins for eCommerce platforms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../libraries/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Libraries
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Direct integration using API
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Direct integration using API
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#api-usage-in-single-payment-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      API usage in single payment scenario
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API usage in single payment scenario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-payment-step-by-step-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Single payment step-by-step guide
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#single-payment-request-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Single payment request examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Single payment request examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-list-of-available-payment-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get list of available payment methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-available-payment-methods-purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create available payment methods purchase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-whitelisted-payment-method-purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create whitelisted payment method purchase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-purchase-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get purchase information
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-purchase-expiration-date" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set purchase expiration date
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-usage-in-recurring-payment-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      API usage in recurring payment scenario
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API usage in recurring payment scenario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recurring-payment-step-by-step-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recurring payment step-by-step guide
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recurring-payment-request-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recurring payment request examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recurring payment request examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-an-initial-purchase-to-register-card-for-subsequent-recurring-payments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create an initial purchase to register card for subsequent recurring payments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-recurring-payment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create recurring payment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#charge-customer-card-as-a-recurring-payment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Charge customer card as a recurring payment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-usage-in-reservation-scenario-payment-execution-separated-from-authorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      API usage in reservation scenario (payment execution separated from authorization)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API usage in reservation scenario (payment execution separated from authorization)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reservation-step-by-step-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reservation step-by-step guide
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reservation-functionality-request-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reservation functionality request examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reservation functionality request examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-reservation-purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a reservation purchase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capture-funds-reserved-by-previously-created-purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capture funds reserved by previously created purchase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capture-partial-funds-reserved-by-previously-created-purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capture partial funds reserved by previously created purchase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#release-funds-reserved-by-previously-created-purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Release funds reserved by previously created purchase
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-usage-in-recurring-payment-reservation-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      API usage in recurring payment &amp; reservation scenario
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API usage in recurring payment & reservation scenario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recurring-payment-reservation-step-by-step-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recurring payment &amp; reservation step-by-step guide
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recurring-payment-reservation-request-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recurring payment &amp; reservation request examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recurring payment & reservation request examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-an-initial-purchase-to-register-card-for-subsequent-recurring-payments_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create an initial purchase to register card for subsequent recurring payments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-recurring-payment-for-reservation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create recurring payment for reservation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reserve-recurring-payment-initial-amount" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reserve recurring payment initial amount
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capture-funds-reserved-by-previously-created-purchase_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capture funds reserved by previously created purchase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capture-partial-funds-reserved-by-previously-created-purchase_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capture partial funds reserved by previously created purchase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#release-funds-reserved-by-previously-created-purchase_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Release funds reserved by previously created purchase
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-usage-in-bulk-payment-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      API usage in bulk payment scenario
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API usage in bulk payment scenario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bulk-payment-step-by-step-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bulk payment step-by-step guide
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bulk-payment-request-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bulk payment request examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bulk payment request examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-bulk-payment-purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a bulk payment purchase
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-usage-in-variable-creditor-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      API usage in variable creditor scenario
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API usage in variable creditor scenario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variable-creditor-payment-step-by-step-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Variable creditor payment step-by-step guide
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-creditor-payment-request-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Variable creditor payment request examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Variable creditor payment request examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-variable-creditor-payment-purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a variable creditor payment purchase
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-usage-in-native-apple-pay-google-paytm-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      API usage in native Apple Pay / Google Pay™ scenario
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API usage in native Apple Pay / Google Pay™ scenario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#native-apple-pay-google-pay-payment-step-by-step-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Native Apple Pay / Google Pay payment step-by-step guide
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#native-apple-pay-google-pay-request-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Native Apple Pay / Google Pay request examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Native Apple Pay / Google Pay request examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-whitelisted-payment-method-purchase_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create whitelisted payment method purchase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-base64-encoded-encrypted-payment-token-obtained-via-apple-pay-google-pay-sdks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Post Base64 encoded encrypted payment token obtained via Apple Pay / Google Pay SDKs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Post Base64 encoded encrypted payment token obtained via Apple Pay / Google Pay SDKs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apple-pay-token-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apple Pay token example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#base64-encoded-apple-pay-token-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Base64 encoded Apple Pay token example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google-pay-token-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Google Pay token example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#base64-encoded-google-pay-token-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Base64 encoded Google Pay token example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apple-pay-post-base64-encoded-encrypted-payment-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apple Pay post Base64 encoded encrypted payment response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google-pay-post-base64-encoded-encrypted-payment-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Google Pay post Base64 encoded encrypted payment response
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../payment-methods/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supported payment methods
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pay-later-widget/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pay Later monthly payment widget
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../static-assets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Static assets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../representation-guidelines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Representation guidelines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../marketing-guidelines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Marketing guidelines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#api-usage-in-single-payment-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      API usage in single payment scenario
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API usage in single payment scenario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-payment-step-by-step-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Single payment step-by-step guide
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#single-payment-request-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Single payment request examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Single payment request examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-list-of-available-payment-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get list of available payment methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-available-payment-methods-purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create available payment methods purchase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-whitelisted-payment-method-purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create whitelisted payment method purchase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-purchase-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get purchase information
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-purchase-expiration-date" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set purchase expiration date
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-usage-in-recurring-payment-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      API usage in recurring payment scenario
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API usage in recurring payment scenario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recurring-payment-step-by-step-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recurring payment step-by-step guide
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recurring-payment-request-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recurring payment request examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recurring payment request examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-an-initial-purchase-to-register-card-for-subsequent-recurring-payments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create an initial purchase to register card for subsequent recurring payments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-recurring-payment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create recurring payment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#charge-customer-card-as-a-recurring-payment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Charge customer card as a recurring payment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-usage-in-reservation-scenario-payment-execution-separated-from-authorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      API usage in reservation scenario (payment execution separated from authorization)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API usage in reservation scenario (payment execution separated from authorization)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reservation-step-by-step-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reservation step-by-step guide
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reservation-functionality-request-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reservation functionality request examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reservation functionality request examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-reservation-purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a reservation purchase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capture-funds-reserved-by-previously-created-purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capture funds reserved by previously created purchase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capture-partial-funds-reserved-by-previously-created-purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capture partial funds reserved by previously created purchase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#release-funds-reserved-by-previously-created-purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Release funds reserved by previously created purchase
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-usage-in-recurring-payment-reservation-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      API usage in recurring payment &amp; reservation scenario
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API usage in recurring payment & reservation scenario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recurring-payment-reservation-step-by-step-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recurring payment &amp; reservation step-by-step guide
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recurring-payment-reservation-request-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recurring payment &amp; reservation request examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recurring payment & reservation request examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-an-initial-purchase-to-register-card-for-subsequent-recurring-payments_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create an initial purchase to register card for subsequent recurring payments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-recurring-payment-for-reservation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create recurring payment for reservation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reserve-recurring-payment-initial-amount" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reserve recurring payment initial amount
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capture-funds-reserved-by-previously-created-purchase_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capture funds reserved by previously created purchase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capture-partial-funds-reserved-by-previously-created-purchase_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capture partial funds reserved by previously created purchase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#release-funds-reserved-by-previously-created-purchase_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Release funds reserved by previously created purchase
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-usage-in-bulk-payment-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      API usage in bulk payment scenario
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API usage in bulk payment scenario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bulk-payment-step-by-step-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bulk payment step-by-step guide
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bulk-payment-request-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bulk payment request examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bulk payment request examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-bulk-payment-purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a bulk payment purchase
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-usage-in-variable-creditor-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      API usage in variable creditor scenario
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API usage in variable creditor scenario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variable-creditor-payment-step-by-step-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Variable creditor payment step-by-step guide
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-creditor-payment-request-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Variable creditor payment request examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Variable creditor payment request examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-variable-creditor-payment-purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a variable creditor payment purchase
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-usage-in-native-apple-pay-google-paytm-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      API usage in native Apple Pay / Google Pay™ scenario
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API usage in native Apple Pay / Google Pay™ scenario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#native-apple-pay-google-pay-payment-step-by-step-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Native Apple Pay / Google Pay payment step-by-step guide
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#native-apple-pay-google-pay-request-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Native Apple Pay / Google Pay request examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Native Apple Pay / Google Pay request examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-whitelisted-payment-method-purchase_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create whitelisted payment method purchase
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-base64-encoded-encrypted-payment-token-obtained-via-apple-pay-google-pay-sdks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Post Base64 encoded encrypted payment token obtained via Apple Pay / Google Pay SDKs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Post Base64 encoded encrypted payment token obtained via Apple Pay / Google Pay SDKs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apple-pay-token-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apple Pay token example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#base64-encoded-apple-pay-token-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Base64 encoded Apple Pay token example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google-pay-token-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Google Pay token example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#base64-encoded-google-pay-token-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Base64 encoded Google Pay token example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apple-pay-post-base64-encoded-encrypted-payment-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apple Pay post Base64 encoded encrypted payment response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google-pay-post-base64-encoded-encrypted-payment-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Google Pay post Base64 encoded encrypted payment response
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="klix-api">Klix API<a class="headerlink" href="#klix-api" title="Permanent link">&para;</a></h1>
+<p>Klix provides unified API for multiple payment methods - card and PSD2 bank payments. Full up-to-date REST API Reference can be found <a href="https://portal.klix.app/api">here</a>. OpenAPI document that can be used to generate API client can be found <a href="https://portal.klix.app/api/schema/v1/">here</a>.
+In order to call Klix API you should first receive API credentials (Brand ID and Secret Key) from Klix representative.</p>
+<h2 id="api-usage-in-single-payment-scenario">API usage in single payment scenario<a class="headerlink" href="#api-usage-in-single-payment-scenario" title="Permanent link">&para;</a></h2>
+<h3 id="single-payment-step-by-step-guide">Single payment step-by-step guide<a class="headerlink" href="#single-payment-step-by-step-guide" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Get list of payment methods (optional). This API end-point returns name and logo of each payment method available to merchant (Klix Card payments, Citadele and other bank PSD2 payments etc.). Use this list to render a payment methods page on your site.</li>
+<li>Create a purchase by submitting order data to Klix. Once purchase is created link to Klix hosted payment page will be returned as <code>checkout_url</code> field value. After customer is redirected to this page Klix will handle the payment process.</li>
+<li>Handle one of possible payment process outcomes:<ul>
+<li>If customer payment is successful then callback is sent to merchant server and customer is redirected to successful purchase page specified by merchant. Note that you should consider purchase as successfully paid only after callback is received and purchase status is checked. Note that in case if callback is not used you can call Klix API to get purchase status once customer is redirected back to successful purchase page.</li>
+<li>If customer payment fails for some reason customer is redirected to failed purchase page.</li>
+<li>If cancelled payment redirect URL is specified in purchase creation request then customer will be able to go back to merchant page from Klix payment page. It's preferable to specify checkout/payment method selection page as cancelled payment redirect URL so that customer can make adjustments in shopping cart or choose different payment method.</li>
+</ul>
+</li>
+</ol>
+<h3 id="single-payment-request-examples">Single payment request examples<a class="headerlink" href="#single-payment-request-examples" title="Permanent link">&para;</a></h3>
+<p>These are simple request examples that illustrate Klix API usage. Always use <a href="https://portal.klix.app/api">API Reference</a> as a single source of truth.
+Note that <code>&lt;Brand ID goes here&gt;</code> and <code>&lt;Secret key goes here&gt;</code> should be replaced with actual <code>Brand ID</code> and <code>Secret Key</code> received from Klix contact person.</p>
+<h4 id="get-list-of-available-payment-methods">Get list of available payment methods<a class="headerlink" href="#get-list-of-available-payment-methods" title="Permanent link">&para;</a></h4>
+<p>This operation allows you to retrieve all payment methods available to you at the current time. Note that payment method availability depends upon your agreement with Klix and it can also vary from time to time e.g. some bank payment method can be temporarily unavailable because of planned maintenance down-time. In such a case this bank payment method will be excluded from the available payment method list returned by this API end-point until planned maintenance is over and this payment method is re-enabled. That's one of the examples of why an available payment method list should be retrieved on a regular basis in order to offer only fully functional payment methods to the end-user.</p>
+<div class="admonition warning">
+<p class="admonition-title">Do not call this API end-point before each purchase initiation since this API end-point is rate limited. Cache available payment methods on server side and call this API end-point not more often than once in a minute.</p>
+</div>
+<p>All payment methods currently supported by Klix are listed <a href="/../payment-methods">here</a>.</p>
+<p>Note that this API end-point returns both payment method general availability, availability in country and additional information like human-readable payment method name and logo URI. </p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s1">&#39;https://portal.klix.app/api/v1/payment_methods/?currency=EUR&amp;brand_id=&lt;Brand ID goes here&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Cache-Control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Connection: keep-alive&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Host: portal.klix.app&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept-encoding: gzip, deflate&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;cache-control: no-cache&#39;</span>
+</code></pre></div>
+<h4 id="create-available-payment-methods-purchase">Create available payment methods purchase<a class="headerlink" href="#create-available-payment-methods-purchase" title="Permanent link">&para;</a></h4>
+<p>This option allows to create a purchase that can be paid using any payment method available to merchant. Customer will be have an option to choose one of available payment methods after redirect to Klix payment page.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://portal.klix.app/api/v1/purchases/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Cache-Control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Connection: keep-alive&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Host: portal.klix.app&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept-encoding: gzip, deflate&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;cache-control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">   &quot;success_callback&quot;: &quot;https://your.site/api/successfully-paid-callback-will-be-sent-to-this-end-point&quot;,</span>
+<span class="s1">   &quot;success_redirect&quot;: &quot;https://your.site/customer-will-be-redirected-here-in-case-of-successfull-payment&quot;,</span>
+<span class="s1">   &quot;failure_redirect&quot;: &quot;https://your.site/customer-will-be-redirected-here-in-case-of-failed-payment&quot;,</span>
+<span class="s1">   &quot;cancel_redirect&quot;: &quot;https://your.site/customer-will-be-redirected-here-in-case-customer-decides-to-go-back-to-your-store-during-payment&quot;,</span>
+<span class="s1">   &quot;purchase&quot;: {</span>
+<span class="s1">      &quot;language&quot;: &quot;lv&quot;,</span>
+<span class="s1">      &quot;products&quot;: [</span>
+<span class="s1">         {</span>
+<span class="s1">            &quot;price&quot;: 3000,</span>
+<span class="s1">            &quot;name&quot;: &quot;Xiaomi Mi Smart Band 5&quot;</span>
+<span class="s1">         },</span>
+<span class="s1">         {</span>
+<span class="s1">            &quot;price&quot;: 100,</span>
+<span class="s1">            &quot;name&quot;: &quot;Screen protector for Xiaomi Mi Smart Band 5&quot;</span>
+<span class="s1">         }</span>
+<span class="s1">      ]</span>
+<span class="s1">   },</span>
+<span class="s1">   &quot;client&quot;: {</span>
+<span class="s1">      &quot;email&quot;: &quot;test@test.com&quot;</span>
+<span class="s1">   },</span>
+<span class="s1">   &quot;brand_id&quot;: &quot;&lt;Brand ID goes here&gt;&quot;,</span>
+<span class="s1">   &quot;reference&quot;: &quot;Your order id&quot;</span>
+<span class="s1">}&#39;</span>
+</code></pre></div>
+<h4 id="create-whitelisted-payment-method-purchase">Create whitelisted payment method purchase<a class="headerlink" href="#create-whitelisted-payment-method-purchase" title="Permanent link">&para;</a></h4>
+<p>This option allows to create a purchase that can be paid only using specified whitelisted payment method. Most often this option is used to allow purchase to be paid using payment method selected on merchant web-site.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://portal.klix.app/api/v1/purchases/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Cache-Control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Connection: keep-alive&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Host: portal.klix.app&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept-encoding: gzip, deflate&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;cache-control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">   &quot;success_callback&quot;: &quot;https://your.site/api/successfully-paid-callback-will-be-sent-to-this-end-point&quot;,</span>
+<span class="s1">   &quot;success_redirect&quot;: &quot;https://your.site/customer-will-be-redirected-here-in-case-of-successfull-payment&quot;,</span>
+<span class="s1">   &quot;failure_redirect&quot;: &quot;https://your.site/customer-will-be-redirected-here-in-case-of-failed-payment&quot;,</span>
+<span class="s1">   &quot;cancel_redirect&quot;: &quot;https://your.site/customer-will-be-redirected-here-in-case-customer-decides-to-go-back-to-your-store-during-payment&quot;,</span>
+<span class="s1">   &quot;purchase&quot;: {</span>
+<span class="s1">      &quot;language&quot;: &quot;lv&quot;,</span>
+<span class="s1">      &quot;products&quot;: [</span>
+<span class="s1">         {</span>
+<span class="s1">            &quot;price&quot;: 3000,</span>
+<span class="s1">            &quot;name&quot;: &quot;Xiaomi Mi Smart Band 5&quot;</span>
+<span class="s1">         },</span>
+<span class="s1">         {</span>
+<span class="s1">            &quot;price&quot;: 100,</span>
+<span class="s1">            &quot;name&quot;: &quot;Screen protector for Xiaomi Mi Smart Band 5&quot;</span>
+<span class="s1">         }</span>
+<span class="s1">      ]</span>
+<span class="s1">   },</span>
+<span class="s1">   &quot;client&quot;: {</span>
+<span class="s1">      &quot;email&quot;: &quot;test@test.com&quot;</span>
+<span class="s1">   },</span>
+<span class="s1">   &quot;payment_method_whitelist&quot;: [&quot;klix&quot;],</span>
+<span class="s1">   &quot;brand_id&quot;: &quot;&lt;Brand ID goes here&gt;&quot;,</span>
+<span class="s1">   &quot;reference&quot;: &quot;Your order id&quot;</span>
+<span class="s1">}&#39;</span>
+</code></pre></div>
+<h4 id="get-purchase-information">Get purchase information<a class="headerlink" href="#get-purchase-information" title="Permanent link">&para;</a></h4>
+<p><code>&lt;Purchase ID&gt;</code> is purchase identifier (field <code>id</code> value) received in purchase creation response.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://portal.klix.app/api/v1/purchases/&lt;Purchase<span class="w"> </span>ID&gt;/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Cache-Control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Connection: keep-alive&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Host: portal.klix.app&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept-encoding: gzip, deflate&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;cache-control: no-cache&#39;</span>
+</code></pre></div>
+<h4 id="set-purchase-expiration-date">Set purchase expiration date<a class="headerlink" href="#set-purchase-expiration-date" title="Permanent link">&para;</a></h4>
+<p>To define an expiration date for a purchase, you need to configure two parameters in the request:</p>
+<ol>
+<li>
+<p><code>due</code> - specifies the exact expiration time for the purchase.
+The value must be provided as a Unix timestamp.</p>
+</li>
+<li>
+<p><code>purchase.due_strict</code> - when set to true, the payment will not be accepted after the due timestamp is reached.</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://portal.klix.app/api/v1/purchases/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Cache-Control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Connection: keep-alive&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Host: portal.klix.app&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept-encoding: gzip, deflate&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;cache-control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">   &quot;success_callback&quot;: &quot;https://your.site/api/successfully-paid-callback-will-be-sent-to-this-end-point&quot;,</span>
+<span class="s1">   &quot;success_redirect&quot;: &quot;https://your.site/customer-will-be-redirected-here-in-case-of-successfull-payment&quot;,</span>
+<span class="s1">   &quot;failure_redirect&quot;: &quot;https://your.site/customer-will-be-redirected-here-in-case-of-failed-payment&quot;,</span>
+<span class="s1">   &quot;cancel_redirect&quot;: &quot;https://your.site/customer-will-be-redirected-here-in-case-customer-decides-to-go-back-to-your-store-during-payment&quot;,</span>
+<span class="s1">   &quot;purchase&quot;: {</span>
+<span class="s1">      &quot;due_strict&quot;: true,</span>
+<span class="s1">      &quot;language&quot;: &quot;lv&quot;,</span>
+<span class="s1">      &quot;products&quot;: [</span>
+<span class="s1">         {</span>
+<span class="s1">            &quot;price&quot;: 3000,</span>
+<span class="s1">            &quot;name&quot;: &quot;Xiaomi Mi Smart Band 5&quot;</span>
+<span class="s1">         },</span>
+<span class="s1">         {</span>
+<span class="s1">            &quot;price&quot;: 100,</span>
+<span class="s1">            &quot;name&quot;: &quot;Screen protector for Xiaomi Mi Smart Band 5&quot;</span>
+<span class="s1">         }</span>
+<span class="s1">      ]</span>
+<span class="s1">   },</span>
+<span class="s1">   &quot;client&quot;: {</span>
+<span class="s1">      &quot;email&quot;: &quot;test@test.com&quot;</span>
+<span class="s1">   },</span>
+<span class="s1">   &quot;payment_method_whitelist&quot;: [&quot;klix&quot;],</span>
+<span class="s1">   &quot;brand_id&quot;: &quot;&lt;Brand ID goes here&gt;&quot;,</span>
+<span class="s1">   &quot;reference&quot;: &quot;Your order id&quot;,</span>
+<span class="s1">   &quot;due&quot;: 1356088289</span>
+<span class="s1">}&#39;</span>
+</code></pre></div>
+<h2 id="api-usage-in-recurring-payment-scenario">API usage in recurring payment scenario<a class="headerlink" href="#api-usage-in-recurring-payment-scenario" title="Permanent link">&para;</a></h2>
+<h3 id="recurring-payment-step-by-step-guide">Recurring payment step-by-step guide<a class="headerlink" href="#recurring-payment-step-by-step-guide" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Create an initial purchase with recurring flag set to <code>true</code> (see <code>"force_recurring": true</code> in <a href="#create-an-initial-purchase-to-register-card-for-subsequent-recurring-payments">example</a>) in order to register payment card details for subsequent use in recurring payments. Created purchase <code>id</code> and <code>checkout_url</code> will be returned in a response. Redirect customer to <code>checkout_url</code> and Klix will handle the payment process. Store this initial purchase <code>id</code> on your side as a recurring payment token and use it later on to charge a customer payment card (see <code>&lt;Recurring payment token&gt;</code> placeholder in <a href="#charge-customer-card-as-a-recurring-payment">example</a>). If purchase created in previous step is paid by customer then card details are successfully captured for subsequent use.</li>
+<li>Once customer card should be charged in a form of a recurring payment new purchase should be created via API by specifying amount that needs to be charged and transaction description. This time <code>force_recurring</code> should be <code>false</code> or can be omitted at all (see <a href="#create-recurring-payment">example</a>). In this case only purchase <code>id</code> returned in response should be used in next step (see <code>&lt;Purchase id of recurring payment&gt;</code> placeholder in <a href="#charge-customer-card-as-a-recurring-payment">example</a>). Note that <code>checkout_url</code> should not be used.</li>
+<li>Created purchase should be charged via API call. Note that both newly created purchase <code>id</code> created in step 2 and recurring payment token (purchase <code>id</code>) created in step 1 should be passed to this API end-point (see <a href="#charge-customer-card-as-a-recurring-payment">example</a>).</li>
+</ol>
+<h3 id="recurring-payment-request-examples">Recurring payment request examples<a class="headerlink" href="#recurring-payment-request-examples" title="Permanent link">&para;</a></h3>
+<p>These are simple request examples that illustrate Klix API usage. Always use <a href="https://portal.klix.app/api">API Reference</a> as a single source of truth.
+Note that <code>&lt;Brand ID goes here&gt;</code> and <code>&lt;Secret key goes here&gt;</code> should be replaced with actual <code>Brand ID</code> and <code>Secret Key</code> received from Klix contact person.</p>
+<h4 id="create-an-initial-purchase-to-register-card-for-subsequent-recurring-payments">Create an initial purchase to register card for subsequent recurring payments<a class="headerlink" href="#create-an-initial-purchase-to-register-card-for-subsequent-recurring-payments" title="Permanent link">&para;</a></h4>
+<p>This should be done only once to make initial payment and register customer card for subsequent use.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://portal.klix.app/api/v1/purchases/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Cache-Control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Connection: keep-alive&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Host: portal.klix.app&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept-encoding: gzip, deflate&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;cache-control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">   &quot;force_recurring&quot;: true,</span>
+<span class="s1">   &quot;success_callback&quot;: &quot;https://your.site/api/successfully-paid-callback-will-be-sent-to-this-end-point&quot;,</span>
+<span class="s1">   &quot;success_redirect&quot;: &quot;https://your.site/customer-will-be-redirected-here-in-case-of-successfull-payment&quot;,</span>
+<span class="s1">   &quot;failure_redirect&quot;: &quot;https://your.site/customer-will-be-redirected-here-in-case-of-failed-payment&quot;,</span>
+<span class="s1">   &quot;cancel_redirect&quot;: &quot;https://your.site/customer-will-be-redirected-here-in-case-customer-decides-to-go-back-to-your-store-during-payment&quot;,</span>
+<span class="s1">   &quot;purchase&quot;: {</span>
+<span class="s1">      &quot;language&quot;: &quot;lv&quot;,</span>
+<span class="s1">      &quot;products&quot;: [</span>
+<span class="s1">         {</span>
+<span class="s1">            &quot;price&quot;: 700,</span>
+<span class="s1">            &quot;name&quot;: &quot;XYZ service subscription&quot;</span>
+<span class="s1">         }</span>
+<span class="s1">      ]</span>
+<span class="s1">   },</span>
+<span class="s1">   &quot;client&quot;: {</span>
+<span class="s1">      &quot;email&quot;: &quot;test@test.com&quot;</span>
+<span class="s1">   },</span>
+<span class="s1">   &quot;brand_id&quot;: &quot;&lt;Brand ID goes here&gt;&quot;,</span>
+<span class="s1">   &quot;reference&quot;: &quot;Your order id&quot;</span>
+<span class="s1">}&#39;</span>
+</code></pre></div>
+<h4 id="create-recurring-payment">Create recurring payment<a class="headerlink" href="#create-recurring-payment" title="Permanent link">&para;</a></h4>
+<p>This should be done for each recurring payment (e.g. each month).</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://portal.klix.app/api/v1/purchases/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Cache-Control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Connection: keep-alive&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Host: portal.klix.app&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept-encoding: gzip, deflate&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;cache-control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">   &quot;success_callback&quot;: &quot;https://your.site/api/successfully-paid-callback-will-be-sent-to-this-end-point&quot;,</span>
+<span class="s1">   &quot;purchase&quot;: {</span>
+<span class="s1">      &quot;language&quot;: &quot;lv&quot;,</span>
+<span class="s1">      &quot;products&quot;: [</span>
+<span class="s1">         {</span>
+<span class="s1">            &quot;price&quot;: 700,</span>
+<span class="s1">            &quot;name&quot;: &quot;XYZ service subscription fee for December 2020&quot;</span>
+<span class="s1">         }</span>
+<span class="s1">      ]</span>
+<span class="s1">   },</span>
+<span class="s1">   &quot;client&quot;: {</span>
+<span class="s1">      &quot;email&quot;: &quot;test@test.com&quot;</span>
+<span class="s1">   },</span>
+<span class="s1">   &quot;brand_id&quot;: &quot;&lt;Brand ID goes here&gt;&quot;,</span>
+<span class="s1">   &quot;reference&quot;: &quot;Your order id&quot;</span>
+<span class="s1">}&#39;</span>
+</code></pre></div>
+<h4 id="charge-customer-card-as-a-recurring-payment">Charge customer card as a recurring payment<a class="headerlink" href="#charge-customer-card-as-a-recurring-payment" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://portal.klix.app/api/v1/purchases/&lt;Purchase<span class="w"> </span>id<span class="w"> </span>of<span class="w"> </span>recurring<span class="w"> </span>payment&gt;/charge<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Cache-Control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Connection: keep-alive&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Host: portal.klix.app&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept-encoding: gzip, deflate&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;cache-control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">   &quot;recurring_token&quot;: &quot;&lt;Recurring payment token&gt;&quot;</span>
+<span class="s1">}&#39;</span>
+</code></pre></div>
+<h2 id="api-usage-in-reservation-scenario-payment-execution-separated-from-authorization">API usage in reservation scenario (payment execution separated from authorization)<a class="headerlink" href="#api-usage-in-reservation-scenario-payment-execution-separated-from-authorization" title="Permanent link">&para;</a></h2>
+<h3 id="reservation-step-by-step-guide">Reservation step-by-step guide<a class="headerlink" href="#reservation-step-by-step-guide" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Create a purchase by submitting order data and additional <code>skip_capture</code> flag to Klix indicating card payment authorization separation from payment execution. Once purchase is created link to Klix hosted payment page will be returned as <code>checkout_url</code> field value. Payment identifier returned in purchase creation response should be stored for later use in capture or release requests. After customer is redirected to this page Klix will capture customer card details and will reserve the funds equal to purchase total amount.</li>
+<li>There are two options how to proceed with reservation:<ul>
+<li>Capture reserved amount. There's an option to capture either full reserved amount or amount that's smaller than initially reserved amount.</li>
+<li>Release (return to customer) reserved amount.</li>
+</ul>
+</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Automatic release of reserved amount</p>
+<p>Reservations are released automatically after 6 days if capture request is not received within this period.</p>
+</div>
+<h3 id="reservation-functionality-request-examples">Reservation functionality request examples<a class="headerlink" href="#reservation-functionality-request-examples" title="Permanent link">&para;</a></h3>
+<p>These are simple request examples that illustrate Klix API usage. Always use <a href="https://portal.klix.app/api">API Reference</a> as a single source of truth.
+Note that <code>&lt;Brand ID goes here&gt;</code> and <code>&lt;Secret key goes here&gt;</code> should be replaced with actual <code>Brand ID</code> and <code>Secret Key</code> received from Klix contact person.</p>
+<h4 id="create-a-reservation-purchase">Create a reservation purchase<a class="headerlink" href="#create-a-reservation-purchase" title="Permanent link">&para;</a></h4>
+<p>This option allows to create a purchase that will reserve purchase total amount in case of card payment. Store purchase <code>id</code> returned in response to either capture or release funds reserved by this purchase. Redirect customer to <code>checkout_url</code> returned in purchase creation response to allow customer to enter card details. Note that in case of successful reservation purchase status will be changed to "hold" instead of "paid" as in case of regular card payment.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://portal.klix.app/api/v1/purchases/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Cache-Control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Connection: keep-alive&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Host: portal.klix.app&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept-encoding: gzip, deflate&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;cache-control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">   &quot;success_callback&quot;: &quot;https://your.site/api/successfully-paid-callback-will-be-sent-to-this-end-point&quot;,</span>
+<span class="s1">   &quot;success_redirect&quot;: &quot;https://your.site/customer-will-be-redirected-here-in-case-of-successfull-payment&quot;,</span>
+<span class="s1">   &quot;failure_redirect&quot;: &quot;https://your.site/customer-will-be-redirected-here-in-case-of-failed-payment&quot;,</span>
+<span class="s1">   &quot;cancel_redirect&quot;: &quot;https://your.site/customer-will-be-redirected-here-in-case-customer-decides-to-go-back-to-your-store-during-payment&quot;,</span>
+<span class="s1">   &quot;purchase&quot;: {</span>
+<span class="s1">      &quot;language&quot;: &quot;lv&quot;,</span>
+<span class="s1">      &quot;products&quot;: [</span>
+<span class="s1">         {</span>
+<span class="s1">            &quot;price&quot;: 3000,</span>
+<span class="s1">            &quot;name&quot;: &quot;Xiaomi Mi Smart Band 5&quot;</span>
+<span class="s1">         },</span>
+<span class="s1">         {</span>
+<span class="s1">            &quot;price&quot;: 100,</span>
+<span class="s1">            &quot;name&quot;: &quot;Screen protector for Xiaomi Mi Smart Band 5&quot;</span>
+<span class="s1">         }</span>
+<span class="s1">      ]</span>
+<span class="s1">   },</span>
+<span class="s1">   &quot;skip_capture&quot;: true,</span>
+<span class="s1">   &quot;client&quot;: {</span>
+<span class="s1">      &quot;email&quot;: &quot;test@test.com&quot;</span>
+<span class="s1">   },</span>
+<span class="s1">   &quot;payment_method_whitelist&quot;: [&quot;klix&quot;],</span>
+<span class="s1">   &quot;brand_id&quot;: &quot;&lt;Brand ID goes here&gt;&quot;,</span>
+<span class="s1">   &quot;reference&quot;: &quot;Your order id&quot;</span>
+<span class="s1">}&#39;</span>
+</code></pre></div>
+<h4 id="capture-funds-reserved-by-previously-created-purchase">Capture funds reserved by previously created purchase<a class="headerlink" href="#capture-funds-reserved-by-previously-created-purchase" title="Permanent link">&para;</a></h4>
+<p>To capture full amount previously reserved by specified purchase no request body should be sent. <code>&lt;Purchase ID&gt;</code> is purchase identifier (field <code>id</code> value) received in purchase creation response.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--location<span class="w"> </span>--request<span class="w"> </span>POST<span class="w"> </span><span class="s1">&#39;https://portal.klix.app/api/v1/purchases/&lt;Purchase ID&gt;/capture/&#39;</span><span class="w"> </span><span class="se">\</span>
+--header<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+--header<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span>
+</code></pre></div>
+<h4 id="capture-partial-funds-reserved-by-previously-created-purchase">Capture partial funds reserved by previously created purchase<a class="headerlink" href="#capture-partial-funds-reserved-by-previously-created-purchase" title="Permanent link">&para;</a></h4>
+<p>To capture amount that's smaller than previously reserved amount this new amount should be specified in request. <code>&lt;Purchase ID&gt;</code> is purchase identifier (field <code>id</code> value) received in purchase creation response.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--location<span class="w"> </span>--request<span class="w"> </span>POST<span class="w"> </span><span class="s1">&#39;https://portal.klix.app/api/v1/purchases/&lt;Purchase ID&gt;/capture/&#39;</span><span class="w"> </span><span class="se">\</span>
+--header<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+--header<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+--data-raw<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;amount&quot;: 5</span>
+<span class="s1">}</span>
+<span class="s1">&#39;</span>
+</code></pre></div>
+<h4 id="release-funds-reserved-by-previously-created-purchase">Release funds reserved by previously created purchase<a class="headerlink" href="#release-funds-reserved-by-previously-created-purchase" title="Permanent link">&para;</a></h4>
+<p>To release funds reserved by Purchase following request should be sent:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--location<span class="w"> </span>--request<span class="w"> </span>POST<span class="w"> </span><span class="s1">&#39;https://portal.klix.app/api/v1/purchases/&lt;Purchase ID&gt;/release/&#39;</span><span class="w"> </span><span class="se">\</span>
+--header<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+--header<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span>
+</code></pre></div>
+<h2 id="api-usage-in-recurring-payment-reservation-scenario">API usage in recurring payment &amp; reservation scenario<a class="headerlink" href="#api-usage-in-recurring-payment-reservation-scenario" title="Permanent link">&para;</a></h2>
+<p>Recurring payment &amp; reservation scenario combines recurring payment and reservation scenarios - after customer performs initial card registration for recurring payments merchant can use this card for reserving initial amount and then either charging exact amount that's not greater than initially reserved amount or releasing reservation.</p>
+<h3 id="recurring-payment-reservation-step-by-step-guide">Recurring payment &amp; reservation step-by-step guide<a class="headerlink" href="#recurring-payment-reservation-step-by-step-guide" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Create an initial purchase with recurring flag set to <code>true</code> (see <code>"force_recurring": true</code> in <a href="#create-an-initial-purchase-to-register-card-for-subsequent-recurring-payments">example</a>) in order to register payment card details for subsequent use in recurring payments. Created purchase <code>id</code> and <code>checkout_url</code> will be returned in a response. Redirect customer to <code>checkout_url</code> and Klix will handle the payment process. Store this initial purchase <code>id</code> on your side as a recurring payment token and use it later on to reserve initial amount (see <code>&lt;Recurring payment token&gt;</code> placeholder in <a href="#reserve-recurring-payment-initial-amount">example</a>). If purchase created in this step is paid by customer then card details are successfully captured for subsequent use.</li>
+<li>Create a new purchase once recurring purchase amount should be reserved. Additional <code>skip_capture</code> flag (see <a href="#create-recurring-payment-for-reservation">example request</a>) should be added in request indicating card payment authorization separation from payment execution. Once purchase is created payment identifier returned in response should be stored for later use in a charge request. In this case only purchase <code>id</code> returned in response should be used in next step (see <code>&lt;Purchase id of recurring payment&gt;</code> placeholder in <a href="#reserve-recurring-payment-initial-amount">example</a>). Note that <code>checkout_url</code> should not be used.</li>
+<li>Make charge API call to perform actual reservation of recurring payment initial amount. Note that both newly created purchase <code>id</code> created in step 2 and recurring payment token (purchase <code>id</code>) created in step 1 should be passed to this API end-point (see <a href="#reserve-recurring-payment-initial-amount">example</a>).</li>
+<li>There are two options how to proceed with recurring payment reservation:<ul>
+<li>Capture reserved amount. There's an option to capture either full reserved amount or amount that's smaller than initially reserved amount.</li>
+<li>Release (return to customer) reserved amount.</li>
+</ul>
+</li>
+</ol>
+<h3 id="recurring-payment-reservation-request-examples">Recurring payment &amp; reservation request examples<a class="headerlink" href="#recurring-payment-reservation-request-examples" title="Permanent link">&para;</a></h3>
+<p>These are simple request examples that illustrate Klix API usage. Always use <a href="https://portal.klix.app/api">API Reference</a> as a single source of truth.
+Note that <code>&lt;Brand ID goes here&gt;</code> and <code>&lt;Secret key goes here&gt;</code> should be replaced with actual <code>Brand ID</code> and <code>Secret Key</code> received from Klix contact person.</p>
+<h4 id="create-an-initial-purchase-to-register-card-for-subsequent-recurring-payments_1"><a href="#create-an-initial-purchase-to-register-card-for-subsequent-recurring-payments">Create an initial purchase to register card for subsequent recurring payments</a><a class="headerlink" href="#create-an-initial-purchase-to-register-card-for-subsequent-recurring-payments_1" title="Permanent link">&para;</a></h4>
+<p>Create an initial purchase for card registration in a same way it's done in a regular recurring payment scenario.</p>
+<h4 id="create-recurring-payment-for-reservation">Create recurring payment for reservation<a class="headerlink" href="#create-recurring-payment-for-reservation" title="Permanent link">&para;</a></h4>
+<p>This should be done for each recurring transaction (e.g. to reserve some predefined amount before electric car charge is started). </p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://portal.klix.app/api/v1/purchases/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Cache-Control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Connection: keep-alive&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Host: portal.klix.app&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept-encoding: gzip, deflate&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;cache-control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">   &quot;success_callback&quot;: &quot;https://your.site/api/successfully-paid-callback-will-be-sent-to-this-end-point&quot;,</span>
+<span class="s1">   &quot;purchase&quot;: {</span>
+<span class="s1">      &quot;language&quot;: &quot;lv&quot;,</span>
+<span class="s1">      &quot;products&quot;: [</span>
+<span class="s1">         {</span>
+<span class="s1">            &quot;price&quot;: 5000,</span>
+<span class="s1">            &quot;name&quot;: &quot;Electric car charge&quot;</span>
+<span class="s1">         }</span>
+<span class="s1">      ]</span>
+<span class="s1">   },</span>
+<span class="s1">   &quot;client&quot;: {</span>
+<span class="s1">      &quot;email&quot;: &quot;test@test.com&quot;</span>
+<span class="s1">   },</span>
+<span class="s1">   &quot;skip_capture&quot;: &quot;true&quot;,</span>
+<span class="s1">   &quot;brand_id&quot;: &quot;&lt;Brand ID goes here&gt;&quot;,</span>
+<span class="s1">   &quot;reference&quot;: &quot;Your order id&quot;</span>
+<span class="s1">}&#39;</span>
+</code></pre></div>
+<h4 id="reserve-recurring-payment-initial-amount">Reserve recurring payment initial amount<a class="headerlink" href="#reserve-recurring-payment-initial-amount" title="Permanent link">&para;</a></h4>
+<p>Note that in case of successful reservation recurring purchase status will be changed to "hold" instead of "paid" as in case of regular card payment.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://portal.klix.app/api/v1/purchases/&lt;Purchase<span class="w"> </span>id<span class="w"> </span>of<span class="w"> </span>recurring<span class="w"> </span>payment&gt;/charge<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Cache-Control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Connection: keep-alive&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Host: portal.klix.app&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept-encoding: gzip, deflate&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;cache-control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">   &quot;recurring_token&quot;: &quot;&lt;Recurring payment token&gt;&quot;</span>
+<span class="s1">}&#39;</span>
+</code></pre></div>
+<h4 id="capture-funds-reserved-by-previously-created-purchase_1"><a href="#capture-funds-reserved-by-previously-created-purchase">Capture funds reserved by previously created purchase</a><a class="headerlink" href="#capture-funds-reserved-by-previously-created-purchase_1" title="Permanent link">&para;</a></h4>
+<p>Note that after successful capture recurring purchase status is changed to "paid".</p>
+<h4 id="capture-partial-funds-reserved-by-previously-created-purchase_1"><a href="#capture-partial-funds-reserved-by-previously-created-purchase">Capture partial funds reserved by previously created purchase</a><a class="headerlink" href="#capture-partial-funds-reserved-by-previously-created-purchase_1" title="Permanent link">&para;</a></h4>
+<p>Note that after successful capture recurring purchase status is changed to "paid".</p>
+<h4 id="release-funds-reserved-by-previously-created-purchase_1"><a href="#release-funds-reserved-by-previously-created-purchase">Release funds reserved by previously created purchase</a><a class="headerlink" href="#release-funds-reserved-by-previously-created-purchase_1" title="Permanent link">&para;</a></h4>
+<p>Note that after successful capture recurring purchase status is changed to "released".</p>
+<h2 id="api-usage-in-bulk-payment-scenario">API usage in bulk payment scenario<a class="headerlink" href="#api-usage-in-bulk-payment-scenario" title="Permanent link">&para;</a></h2>
+<p>A bulk payment is a group of payments to multiple bank accounts (IBANs) which requires only single confirmation from customer.</p>
+<p>Typical use case for bulk payment functionality is a product marketplaces where during a checkout customer pays to multiple merchants at once. 
+Bulk payment functionality allows to initiate and confirm these multiple payments as a single payment.</p>
+<p>Here is a list of the payment methods that currently support bulk payment functionality:</p>
+<ul>
+<li>citadele_ee_pis</li>
+<li>citadele_lt_pis</li>
+<li>citadele_lv_pis</li>
+<li>seb_ee_pis</li>
+<li>seb_lt_pis</li>
+<li>seb_lv_pis</li>
+<li>swedbank_ee_pis</li>
+<li>swedbank_lt_pis</li>
+<li>swedbank_lv_pis</li>
+</ul>
+<h3 id="bulk-payment-step-by-step-guide">Bulk payment step-by-step guide<a class="headerlink" href="#bulk-payment-step-by-step-guide" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Sign the agreement with Klix for the usage of bulk payment functionality. Submit the list of creditor IBANs for whitelisting.</li>
+<li>Initiate a bulk payment by providing multiple creditors and amounts.</li>
+<li>Handle a single successful payment callback for each bulk payment.</li>
+</ol>
+<h3 id="bulk-payment-request-examples">Bulk payment request examples<a class="headerlink" href="#bulk-payment-request-examples" title="Permanent link">&para;</a></h3>
+<p>These are simple request examples that illustrate Klix API usage. Always use <a href="https://portal.klix.app/api">API Reference</a> as a single source of truth.
+Note that <code>&lt;Brand ID goes here&gt;</code> and <code>&lt;Secret key goes here&gt;</code> should be replaced with actual <code>Brand ID</code> and <code>Secret Key</code> received from Klix contact person.</p>
+<h4 id="create-a-bulk-payment-purchase">Create a bulk payment purchase<a class="headerlink" href="#create-a-bulk-payment-purchase" title="Permanent link">&para;</a></h4>
+<p>Initiate a purchase by specifying multiple creditors and corresponding payment amounts and descriptions. In the following example Swedbank Latvia bulk payment total amount is 0.03 EUR, and it consists of two payments:</p>
+<ul>
+<li>0.02 EUR payment to John Doe's IBAN LVXXPARX0000000000001 with a payment description "Description of payment to John Doe"</li>
+<li>0.01 EUR payment to Jane Doe's IBAN LVXXHABA0000000000001 with a payment description "Description of payment to Jane Doe"</li>
+</ul>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://portal.klix.app/api/v1/purchases/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Cache-Control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Connection: keep-alive&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Host: portal.klix.app&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept-encoding: gzip, deflate&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;cache-control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;purchase&quot;: {</span>
+<span class="s1">        &quot;products&quot;: [</span>
+<span class="s1">            {</span>
+<span class="s1">                &quot;name&quot;: &quot;Description of payment to John Doe&quot;,</span>
+<span class="s1">                &quot;price&quot;: 2</span>
+<span class="s1">            },</span>
+<span class="s1">            {</span>
+<span class="s1">                &quot;name&quot;: &quot;Description of payment to Jane Doe&quot;,</span>
+<span class="s1">                &quot;price&quot;: 1</span>
+<span class="s1">            }</span>
+<span class="s1">        ],</span>
+<span class="s1">        &quot;payment_method_details&quot;: {</span>
+<span class="s1">            &quot;pis_bulk_purchase&quot;: [</span>
+<span class="s1">                {</span>
+<span class="s1">                    &quot;creditor_name&quot;: &quot;John Doe&quot;,</span>
+<span class="s1">                    &quot;creditor_iban&quot;: &quot;LVXXPARX0000000000001&quot;</span>
+<span class="s1">                },</span>
+<span class="s1">                {</span>
+<span class="s1">                    &quot;creditor_name&quot;: &quot;Jane Doe&quot;,</span>
+<span class="s1">                    &quot;creditor_iban&quot;: &quot;LVXXHABA0000000000001&quot;</span>
+<span class="s1">                }</span>
+<span class="s1">            ]</span>
+<span class="s1">        }</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;client&quot;: {</span>
+<span class="s1">        &quot;email&quot;: &quot;test@test.com&quot;</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;payment_method_whitelist&quot;: [&quot;swedbank_lv_pis&quot;],</span>
+<span class="s1">    &quot;brand_id&quot;: &quot;&lt;Brand ID goes here&gt;`&quot;,</span>
+<span class="s1">    &quot;reference&quot;: &quot;Your order id&quot;</span>
+<span class="s1">}&#39;</span>
+</code></pre></div>
+<p>After redirecting customer to Klix payment page (field <code>checkout_url</code> from init payment response) bulk payment details will be presented.</p>
+<p><img alt="Bulk payment example" src="../images/api/bulk_payment_example.png" /></p>
+<p>Note that all creditor IBANs should be whitelisted before bulk payment is initiated. In case at least one of the creditor IBANs is not whitelisted following error message is returned in a purchase initiation response:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;__all__&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Creditor&#39;s IBAN &#39;LVXXPARX0000000000001&#39; is not whitelisted. Please ensure the creditor&#39;s IBAN is added to the whitelist and try again.&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;invalid&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="api-usage-in-variable-creditor-scenario">API usage in variable creditor scenario<a class="headerlink" href="#api-usage-in-variable-creditor-scenario" title="Permanent link">&para;</a></h2>
+<p>By default, each Klix bank payment method's creditor account number configuration is set to a static IBAN specified by the merchant in the Klix agreement.
+If the merchant needs to specify the creditor account number individually during purchase initiation, the variable creditor account functionality should be used. Note that this functionality is disabled by default, and its usage must be explicitly requested.</p>
+<h3 id="variable-creditor-payment-step-by-step-guide">Variable creditor payment step-by-step guide<a class="headerlink" href="#variable-creditor-payment-step-by-step-guide" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Sign the agreement with Klix for the usage of variable creditor payment functionality. Submit the list of creditor IBANs and creditor names for whitelisting.</li>
+<li>Initiate a purchase by specifying one of the previously whitelisted creditor IBANs and creditor names.</li>
+</ol>
+<h3 id="variable-creditor-payment-request-examples">Variable creditor payment request examples<a class="headerlink" href="#variable-creditor-payment-request-examples" title="Permanent link">&para;</a></h3>
+<p>These are simple request examples that illustrate Klix API usage. Always use <a href="https://portal.klix.app/api">API Reference</a> as a single source of truth.
+Note that <code>&lt;Brand ID goes here&gt;</code> and <code>&lt;Secret key goes here&gt;</code> should be replaced with actual <code>Brand ID</code> and <code>Secret Key</code> received from Klix contact person.</p>
+<h4 id="create-a-variable-creditor-payment-purchase">Create a variable creditor payment purchase<a class="headerlink" href="#create-a-variable-creditor-payment-purchase" title="Permanent link">&para;</a></h4>
+<p>Initiate a purchase by specifying one of the previously whitelisted creditor IBANs and names.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://portal.klix.app/api/v1/purchases/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Cache-Control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Connection: keep-alive&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Host: portal.klix.app&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept-encoding: gzip, deflate&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;cache-control: no-cache&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;purchase&quot;: {</span>
+<span class="s1">        &quot;products&quot;: [</span>
+<span class="s1">            {</span>
+<span class="s1">                &quot;name&quot;: &quot;Variable creditor account example&quot;,</span>
+<span class="s1">                &quot;price&quot;: 5</span>
+<span class="s1">            },</span>
+<span class="s1">        ],</span>
+<span class="s1">        &quot;payment_method_details&quot;: {</span>
+<span class="s1">            &quot;pis_purchase&quot;: {</span>
+<span class="s1">                &quot;creditor&quot;: {</span>
+<span class="s1">                    &quot;iban&quot;: &quot;LVXXPARX0000000000001&quot;,</span>
+<span class="s1">                    &quot;name&quot;: &quot;John Doe&quot;</span>
+<span class="s1">                }</span>
+<span class="s1">            }</span>
+<span class="s1">        }</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;client&quot;: {</span>
+<span class="s1">        &quot;email&quot;: &quot;test@test.com&quot;</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;payment_method_whitelist&quot;: [&quot;swedbank_lv_pis&quot;],</span>
+<span class="s1">    &quot;brand_id&quot;: &quot;&lt;Brand ID goes here&gt;`&quot;,</span>
+<span class="s1">    &quot;reference&quot;: &quot;Your order id&quot;</span>
+<span class="s1">}&#39;</span>
+</code></pre></div>
+<p>As previously mentioned only previously whitelisted IBAN and creditor name can specified in purchase initiation request. In case creditor IBAN or name is not whitelisted following error message is returned in a purchase initiation response:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">   </span><span class="nt">&quot;creditor&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The provided creditor name or IBAN is not in the whitelist.&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;invalid&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="api-usage-in-native-apple-pay-google-paytm-scenario">API usage in native Apple Pay / Google Pay™ scenario<a class="headerlink" href="#api-usage-in-native-apple-pay-google-paytm-scenario" title="Permanent link">&para;</a></h2>
+<p>By default, Klix Apple Pay / Google Pay payments are handled fully on Klix side i.e. after Klix purchase initiation customer is redirected to Klix hosted payment page where customer interacts with Apple Pay / Google Pay browser elements. Interaction with Apple Pay / Google Pay JavaScript SDK is done by Klix in this case.</p>
+<p>To accept Apple Pay / Google Pay payments directly in your application or website, Klix provides an API end-point that accepts encrypted payment token. In case of native Apple Pay / Google Pay payments there are no redirects to Klix payment page and merchant is responsible for interaction with Apple Pay / Google Pay JavaScript or mobile SDKs.</p>
+<p>In order to initiate native iOS Apple Pay payment request merchant should use their own Apple Pay merchant identifier e.g. <code>merchant.lv.merchant1</code> (also note that 3D Secure capability should be set):</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span> <span class="nv">paymentRequest</span> <span class="p">=</span> <span class="bp">PKPaymentRequest</span><span class="p">()</span>
+<span class="n">paymentRequest</span><span class="p">.</span><span class="n">merchantIdentifier</span> <span class="p">=</span> <span class="s">&quot;merchant.lv.merchant1&quot;</span>
+<span class="n">paymentRequest</span><span class="p">.</span><span class="n">supportedNetworks</span> <span class="p">=</span> <span class="p">[.</span><span class="n">visa</span><span class="p">,</span> <span class="p">.</span><span class="n">masterCard</span><span class="p">]</span>
+<span class="n">paymentRequest</span><span class="p">.</span><span class="n">merchantCapabilities</span> <span class="p">=</span> <span class="p">.</span><span class="n">capability3DS</span>
+</code></pre></div>
+<p>Merchant should also request payment processing certificate signing request (CSR) from Klix support, upload it during merchant identifier registration, download certificate signed by Apple and provide it to Klix support. Note that in case of direct Apple Pay integration in merchant's website using JS SDK, merchant will additionally need to perform the domain verification.</p>
+<p>In order to initiate Google Pay payment request following <code>gateway</code>, <code>gatewayMerchantId</code> and <code>merchantId</code> should be specified (also note <code>allowedAuthMethods</code> value):</p>
+<div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="nv">paymentDataRequest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PaymentDataRequest</span><span class="p">.</span><span class="na">fromJson</span><span class="p">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">{</span>
+<span class="s">  &quot;apiVersion&quot;: 2,</span>
+<span class="s">  &quot;apiVersionMinor&quot;: 0,</span>
+<span class="s">  &quot;allowedPaymentMethods&quot;: [</span>
+<span class="s">    {</span>
+<span class="s">      &quot;type&quot;: &quot;CARD&quot;,</span>
+<span class="s">      &quot;parameters&quot;: {</span>
+<span class="s">        &quot;allowedAuthMethods&quot;: [&quot;PAN_ONLY&quot;, &quot;CRYPTOGRAM_3DS&quot;],</span>
+<span class="s">        &quot;allowedCardNetworks&quot;: [&quot;VISA&quot;, &quot;MASTERCARD&quot;]</span>
+<span class="s">      },</span>
+<span class="s">      &quot;tokenizationSpecification&quot;: {</span>
+<span class="s">        &quot;type&quot;: &quot;PAYMENT_GATEWAY&quot;,</span>
+<span class="s">        &quot;parameters&quot;: {</span>
+<span class="s">          &quot;gateway&quot;: &quot;klix&quot;,</span>
+<span class="s">          &quot;gatewayMerchantId&quot;: &quot;request_your_gateway_merchant_id_to_klix_support&quot;</span>
+<span class="s">        }</span>
+<span class="s">      }</span>
+<span class="s">    }</span>
+<span class="s">  ],</span>
+<span class="s">  &quot;transactionInfo&quot;: {</span>
+<span class="s">    &quot;totalPriceStatus&quot;: &quot;FINAL&quot;,</span>
+<span class="s">    &quot;totalPrice&quot;: &quot;1.00&quot;,</span>
+<span class="s">    &quot;currencyCode&quot;: &quot;EUR&quot;</span>
+<span class="s">  },</span>
+<span class="s">  &quot;merchantInfo&quot;: {</span>
+<span class="s">    &quot;merchantName&quot;: &quot;your_company_name&quot;,</span>
+<span class="s">    &quot;merchantId&quot;: &quot;BCR2DN4TTWQITP2N&quot;</span>
+<span class="s">  }</span>
+<span class="s">}</span>
+<span class="s">&quot;&quot;&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="native-apple-pay-google-pay-payment-step-by-step-guide">Native Apple Pay / Google Pay payment step-by-step guide<a class="headerlink" href="#native-apple-pay-google-pay-payment-step-by-step-guide" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Initiate a payment by specifying either <code>klix_apple_pay</code> or <code>klix_google_pay</code> as a whitelisted payment method.</li>
+<li>Post Base64 encoded encrypted payment token obtained via Apple Pay / Google Pay SDKs.</li>
+</ol>
+<h3 id="native-apple-pay-google-pay-request-examples">Native Apple Pay / Google Pay request examples<a class="headerlink" href="#native-apple-pay-google-pay-request-examples" title="Permanent link">&para;</a></h3>
+<p>These are simple request examples that illustrate Klix API usage. Always use <a href="https://portal.klix.app/api">API Reference</a> as a single source of truth.
+Note that <code>&lt;Brand ID goes here&gt;</code> and <code>&lt;Secret key goes here&gt;</code> should be replaced with actual <code>Brand ID</code> and <code>Secret Key</code> received from Klix contact person.</p>
+<h4 id="create-whitelisted-payment-method-purchase_1"><a href="#create-whitelisted-payment-method-purchase">Create whitelisted payment method purchase</a><a class="headerlink" href="#create-whitelisted-payment-method-purchase_1" title="Permanent link">&para;</a></h4>
+<p>Pass <code>klix_apple_pay</code> or <code>klix_google_pay</code> as purchase initiation request field <code>payment_method_whitelist</code> value.</p>
+<h4 id="post-base64-encoded-encrypted-payment-token-obtained-via-apple-pay-google-pay-sdks">Post Base64 encoded encrypted payment token obtained via Apple Pay / Google Pay SDKs<a class="headerlink" href="#post-base64-encoded-encrypted-payment-token-obtained-via-apple-pay-google-pay-sdks" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--location<span class="w"> </span>--request<span class="w"> </span>POST<span class="w"> </span><span class="s1">&#39;https://portal.klix.app/p/&lt;Purchase id returned in previous step&gt;/&#39;</span><span class="w"> </span><span class="se">\</span>
+--header<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;Secret key goes here&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+--form<span class="w"> </span><span class="s1">&#39;pm=&quot;&lt;Payment method name&gt;&quot;&#39;</span><span class="w"> </span><span class="se">\</span>
+--form<span class="w"> </span><span class="s1">&#39;s2s=&quot;true&quot;&#39;</span>
+--form<span class="w"> </span><span class="s1">&#39;data=&quot;&lt;Base64 encoded token&gt;&quot;&#39;</span>
+</code></pre></div>
+<p>Do not forget to specify the desired payment method as a form field <code>pm</code> value, e.g. <code>klix_apple_pay</code> or <code>klix_google_pay</code> and form field <code>s2s</code> value <code>"true"</code>.
+Form field <code>data</code> value is Base64 encoded token.</p>
+<h5 id="apple-pay-token-example">Apple Pay token example<a class="headerlink" href="#apple-pay-token-example" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">   </span><span class="nt">&quot;payment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;paymentData&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BgpuZOTAwfvcKLjTeEb2KRx7lzj5ovSFU9dXOeNO8siMVNYR+TyrTgcsR3m2f1joLnpRgi+ThW7Z7uJvBeaQ9o1bsML7dMku7ncs0YCqA0M2Xzc0jTTXiQPdvbw0+kBdJEFGu/Z0qrSlP5QkTuMISwxzLs9ZaZBpgWsuhgKvW4Fg3Ci6igfZPbCqy5isz1M48MGDUBc1Ao3y2uU+2Gg1tGTjUD4dl8CPlLiXFFVKtYt4Ji6pk6vzr1MsOs6h7uT7rT8dbN2oRUnx7k0bhYe1d8sMiM0sT36jvt8ygJUaB0ZRNCIbzh/mUKfj9QYWv203TuiRd/RBNtceRewZsZbRS3aaPdv9J6z+8Is2Jz2lmHuj8VsxBfeY66K3kgL0jOwmF+99Bm53slmF2VPseTonW49ODNPYb7u5tTPTljtFWX7bb/o=&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;signature&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MIAGCSqGSIb3DQEHAqCAMIACAQExDTALBglghkgBZQMEAgEwgAYJKoZIhvcNAQcBAACggDCCA+MwggOIoAMCAQICCEwwQUlRnVQ2MAoGCCqGSM49BAMCMHoxLjAsBgNVBAMMJUFwcGxlIEFwcGxpY2F0aW9uIEludGVncmF0aW9uIENBIC0gRzMxJjAkBgNVBAsMHUFwcGxlIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MRMwEQYDVQQKDApBcHBsZSBJbmMuMQswCQYDVQQGEwJVUzAeFw0xOTA1MTgwMTMyNTdaFw0yNDA1MTYwMTMyNTdaMF8xJTAjBgNVBAMMHGVjYy1zbXAtYnJva2VyLXNpZ25fVUM0LVBST0QxFDASBgNVBAsMC2lPUyBTeXN0ZW1zMRMwEQYDVQQKDApBcHBsZSBJbmMuMQswCQYDVQQGEwJVUzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABMIVd+3r1seyIY9o3XCQoSGNx7C9bywoPYRgldlK9KVBG4NCDtgR80B+gzMfHFTD9+syINa61dTv9JKJiT58DxOjggIRMIICDTAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFCPyScRPk+TvJ+bE9ihsP6K7/S5LMEUGCCsGAQUFBwEBBDkwNzA1BggrBgEFBQcwAYYpaHR0cDovL29jc3AuYXBwbGUuY29tL29jc3AwNC1hcHBsZWFpY2EzMDIwggEdBgNVHSAEggEUMIIBEDCCAQwGCSqGSIb3Y2QFATCB/jCBwwYIKwYBBQUHAgIwgbYMgbNSZWxpYW5jZSBvbiB0aGlzIGNlcnRpZmljYXRlIGJ5IGFueSBwYXJ0eSBhc3N1bWVzIGFjY2VwdGFuY2Ugb2YgdGhlIHRoZW4gYXBwbGljYWJsZSBzdGFuZGFyZCB0ZXJtcyBhbmQgY29uZGl0aW9ucyBvZiB1c2UsIGNlcnRpZmljYXRlIHBvbGljeSBhbmQgY2VydGlmaWNhdGlvbiBwcmFjdGljZSBzdGF0ZW1lbnRzLjA2BggrBgEFBQcCARYqaHR0cDovL3d3dy5hcHBsZS5jb20vY2VydGlmaWNhdGVhdXRob3JpdHkvMDQGA1UdHwQtMCswKaAnoCWGI2h0dHA6Ly9jcmwuYXBwbGUuY29tL2FwcGxlYWljYTMuY3JsMB0GA1UdDgQWBBSUV9tv1XSBhomJdi9+V4UH55tYJDAOBgNVHQ8BAf8EBAMCB4AwDwYJKoZIhvdjZAYdBAIFADAKBggqhkjOPQQDAgNJADBGAiEAvglXH+ceHnNbVeWvrLTHL+tEXzAYUiLHJRACth69b1UCIQDRizUKXdbdbrF0YDWxHrLOh8+j5q9svYOAiQ3ILN2qYzCCAu4wggJ1oAMCAQICCEltL786mNqXMAoGCCqGSM49BAMCMGcxGzAZBgNVBAMMEkFwcGxlIFJvb3QgQ0EgLSBHMzEmMCQGA1UECwwdQXBwbGUgQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkxEzARBgNVBAoMCkFwcGxlIEluYy4xCzAJBgNVBAYTAlVTMB4XDTE0MDUwNjIzNDYzMFoXDTI5MDUwNjIzNDYzMFowejEuMCwGA1UEAwwlQXBwbGUgQXBwbGljYXRpb24gSW50ZWdyYXRpb24gQ0EgLSBHMzEmMCQGA1UECwwdQXBwbGUgQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkxEzARBgNVBAoMCkFwcGxlIEluYy4xCzAJBgNVBAYTAlVTMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE8BcRhBnXZIXVGl4lgQd26ICi7957rk3gjfxLk+EzVtVmWzWuItCXdg0iTnu6CP12F86Iy3a7ZnC+yOgphP9URaOB9zCB9DBGBggrBgEFBQcBAQQ6MDgwNgYIKwYBBQUHMAGGKmh0dHA6Ly9vY3NwLmFwcGxlLmNvbS9vY3NwMDQtYXBwbGVyb290Y2FnMzAdBgNVHQ4EFgQUI/JJxE+T5O8n5sT2KGw/orv9LkswDwYDVR0TAQH/BAUwAwEB/zAfBgNVHSMEGDAWgBS7sN6hWDOImqSKmd6+veuv2sskqzA3BgNVHR8EMDAuMCygKqAohiZodHRwOi8vY3JsLmFwcGxlLmNvbS9hcHBsZXJvb3RjYWczLmNybDAOBgNVHQ8BAf8EBAMCAQYwEAYKKoZIhvdjZAYCDgQCBQAwCgYIKoZIzj0EAwIDZwAwZAIwOs9yg1EWmbGG+zXDVspiv/QX7dkPdU2ijr7xnIFeQreJ+Jj3m1mfmNVBDY+d6cL+AjAyLdVEIbCjBXdsXfM4O5Bn/Rd8LCFtlk/GcmmCEm9U+Hp9G5nLmwmJIWEGmQ8Jkh0AADGCAYgwggGEAgEBMIGGMHoxLjAsBgNVBAMMJUFwcGxlIEFwcGxpY2F0aW9uIEludGVncmF0aW9uIENBIC0gRzMxJjAkBgNVBAsMHUFwcGxlIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MRMwEQYDVQQKDApBcHBsZSBJbmMuMQswCQYDVQQGEwJVUwIITDBBSVGdVDYwCwYJYIZIAWUDBAIBoIGTMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTIzMDUyNDE5Mjc1M1owKAYJKoZIhvcNAQk0MRswGTALBglghkgBZQMEAgGhCgYIKoZIzj0EAwIwLwYJKoZIhvcNAQkEMSIEIPjM2YkgroC2//zhHgmk80KnkLlcyZRVYt38wY8L851RMAoGCCqGSM49BAMCBEcwRQIgJdU2sd49K3cplsoAMppNolR36g5ktefleZu9H4a8UV8CIQDjgkWt5ZD7n9UaHpZsvKgbdktMq6MhG60bRemX8RnqXwAAAAAAAA==&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;header&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;publicKeyHash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sVJ+hz3Jyb0eKCe276d05QHmUF5K9+HCalzkUBPQ9YE=&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;ephemeralPublicKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEOuabaFAe9UQlHceNRNrlhef+lpW/Xuwk/sOmttK0iCt2hJqgqiq/b/ZDN2RjzRlTEXWlFAMkMf6O3f4cxK9tUg==&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;transactionId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c82114434378b3372d2c739b91c2d08d3e79038bcd0cff37dbf220a57a9e69cf&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EC_v1&quot;</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w">         </span><span class="nt">&quot;paymentMethod&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;displayName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Visa 0224&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;network&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Visa&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;debit&quot;</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w">         </span><span class="nt">&quot;transactionIdentifier&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c82114434378b3372d2c739b91c2d08d3e79038bcd0cff37dbf220a57a9e69cf&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h5 id="base64-encoded-apple-pay-token-example">Base64 encoded Apple Pay token example<a class="headerlink" href="#base64-encoded-apple-pay-token-example" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code>ewogICAgInBheW1lbnQiOiB7CiAgICAgICAgInRva2VuIjogewogICAgICAgICAgICAicGF5bWVudERhdGEiOiB7CiAgICAgICAgICAgICAgICAiZGF0YSI6ICJCZ3B1Wk9UQXdmdmNLTGpUZUViMktSeDdsemo1b3ZTRlU5ZFhPZU5POHNpTVZOWVIrVHlyVGdjc1IzbTJmMWpvTG5wUmdpK1RoVzdaN3VKdkJlYVE5bzFic01MN2RNa3U3bmNzMFlDcUEwTTJYemMwalRUWGlRUGR2YncwK2tCZEpFRkd1L1owcXJTbFA1UWtUdU1JU3d4ekxzOVphWkJwZ1dzdWhnS3ZXNEZnM0NpNmlnZlpQYkNxeTVpc3oxTTQ4TUdEVUJjMUFvM3kydVUrMkdnMXRHVGpVRDRkbDhDUGxMaVhGRlZLdFl0NEppNnBrNnZ6cjFNc09zNmg3dVQ3clQ4ZGJOMm9SVW54N2swYmhZZTFkOHNNaU0wc1QzNmp2dDh5Z0pVYUIwWlJOQ0liemgvbVVLZmo5UVlXdjIwM1R1aVJkL1JCTnRjZVJld1pzWmJSUzNhYVBkdjlKNnorOElzMkp6MmxtSHVqOFZzeEJmZVk2Nksza2dMMGpPd21GKzk5Qm01M3NsbUYyVlBzZVRvblc0OU9ETlBZYjd1NXRUUFRsanRGV1g3YmIvbz0iLAogICAgICAgICAgICAgICAgICAgICJzaWduYXR1cmUiOiAiTUlBR0NTcUdTSWIzRFFFSEFxQ0FNSUFDQVFFeERUQUxCZ2xnaGtnQlpRTUVBZ0V3Z0FZSktvWklodmNOQVFjQkFBQ2dnRENDQStNd2dnT0lvQU1DQVFJQ0NFd3dRVWxSblZRMk1Bb0dDQ3FHU000OUJBTUNNSG94TGpBc0JnTlZCQU1NSlVGd2NHeGxJRUZ3Y0d4cFkyRjBhVzl1SUVsdWRHVm5jbUYwYVc5dUlFTkJJQzBnUnpNeEpqQWtCZ05WQkFzTUhVRndjR3hsSUVObGNuUnBabWxqWVhScGIyNGdRWFYwYUc5eWFYUjVNUk13RVFZRFZRUUtEQXBCY0hCc1pTQkpibU11TVFzd0NRWURWUVFHRXdKVlV6QWVGdzB4T1RBMU1UZ3dNVE15TlRkYUZ3MHlOREExTVRZd01UTXlOVGRhTUY4eEpUQWpCZ05WQkFNTUhHVmpZeTF6YlhBdFluSnZhMlZ5TFhOcFoyNWZWVU0wTFZCU1QwUXhGREFTQmdOVkJBc01DMmxQVXlCVGVYTjBaVzF6TVJNd0VRWURWUVFLREFwQmNIQnNaU0JKYm1NdU1Rc3dDUVlEVlFRR0V3SlZVekJaTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEEwSUFCTUlWZCszcjFzZXlJWTlvM1hDUW9TR054N0M5Ynl3b1BZUmdsZGxLOUtWQkc0TkNEdGdSODBCK2d6TWZIRlREOStzeUlOYTYxZFR2OUpLSmlUNThEeE9qZ2dJUk1JSUNEVEFNQmdOVkhSTUJBZjhFQWpBQU1COEdBMVVkSXdRWU1CYUFGQ1B5U2NSUGsrVHZKK2JFOWloc1A2SzcvUzVMTUVVR0NDc0dBUVVGQndFQkJEa3dOekExQmdnckJnRUZCUWN3QVlZcGFIUjBjRG92TDI5amMzQXVZWEJ3YkdVdVkyOXRMMjlqYzNBd05DMWhjSEJzWldGcFkyRXpNREl3Z2dFZEJnTlZIU0FFZ2dFVU1JSUJFRENDQVF3R0NTcUdTSWIzWTJRRkFUQ0IvakNCd3dZSUt3WUJCUVVIQWdJd2diWU1nYk5TWld4cFlXNWpaU0J2YmlCMGFHbHpJR05sY25ScFptbGpZWFJsSUdKNUlHRnVlU0J3WVhKMGVTQmhjM04xYldWeklHRmpZMlZ3ZEdGdVkyVWdiMllnZEdobElIUm9aVzRnWVhCd2JHbGpZV0pzWlNCemRHRnVaR0Z5WkNCMFpYSnRjeUJoYm1RZ1kyOXVaR2wwYVc5dWN5QnZaaUIxYzJVc0lHTmxjblJwWm1sallYUmxJSEJ2YkdsamVTQmhibVFnWTJWeWRHbG1hV05oZEdsdmJpQndjbUZqZEdsalpTQnpkR0YwWlcxbGJuUnpMakEyQmdnckJnRUZCUWNDQVJZcWFIUjBjRG92TDNkM2R5NWhjSEJzWlM1amIyMHZZMlZ5ZEdsbWFXTmhkR1ZoZFhSb2IzSnBkSGt2TURRR0ExVWRId1F0TUNzd0thQW5vQ1dHSTJoMGRIQTZMeTlqY213dVlYQndiR1V1WTI5dEwyRndjR3hsWVdsallUTXVZM0pzTUIwR0ExVWREZ1FXQkJTVVY5dHYxWFNCaG9tSmRpOStWNFVINTV0WUpEQU9CZ05WSFE4QkFmOEVCQU1DQjRBd0R3WUpLb1pJaHZkalpBWWRCQUlGQURBS0JnZ3Foa2pPUFFRREFnTkpBREJHQWlFQXZnbFhIK2NlSG5OYlZlV3ZyTFRITCt0RVh6QVlVaUxISlJBQ3RoNjliMVVDSVFEUml6VUtYZGJkYnJGMFlEV3hIckxPaDgrajVxOXN2WU9BaVEzSUxOMnFZekNDQXU0d2dnSjFvQU1DQVFJQ0NFbHRMNzg2bU5xWE1Bb0dDQ3FHU000OUJBTUNNR2N4R3pBWkJnTlZCQU1NRWtGd2NHeGxJRkp2YjNRZ1EwRWdMU0JITXpFbU1DUUdBMVVFQ3d3ZFFYQndiR1VnUTJWeWRHbG1hV05oZEdsdmJpQkJkWFJvYjNKcGRIa3hFekFSQmdOVkJBb01Da0Z3Y0d4bElFbHVZeTR4Q3pBSkJnTlZCQVlUQWxWVE1CNFhEVEUwTURVd05qSXpORFl6TUZvWERUSTVNRFV3TmpJek5EWXpNRm93ZWpFdU1Dd0dBMVVFQXd3bFFYQndiR1VnUVhCd2JHbGpZWFJwYjI0Z1NXNTBaV2R5WVhScGIyNGdRMEVnTFNCSE16RW1NQ1FHQTFVRUN3d2RRWEJ3YkdVZ1EyVnlkR2xtYVdOaGRHbHZiaUJCZFhSb2IzSnBkSGt4RXpBUkJnTlZCQW9NQ2tGd2NHeGxJRWx1WXk0eEN6QUpCZ05WQkFZVEFsVlRNRmt3RXdZSEtvWkl6ajBDQVFZSUtvWkl6ajBEQVFjRFFnQUU4QmNSaEJuWFpJWFZHbDRsZ1FkMjZJQ2k3OTU3cmszZ2pmeExrK0V6VnRWbVd6V3VJdENYZGcwaVRudTZDUDEyRjg2SXkzYTdabkMreU9ncGhQOVVSYU9COXpDQjlEQkdCZ2dyQmdFRkJRY0JBUVE2TURnd05nWUlLd1lCQlFVSE1BR0dLbWgwZEhBNkx5OXZZM053TG1Gd2NHeGxMbU52YlM5dlkzTndNRFF0WVhCd2JHVnliMjkwWTJGbk16QWRCZ05WSFE0RUZnUVVJL0pKeEUrVDVPOG41c1QyS0d3L29ydjlMa3N3RHdZRFZSMFRBUUgvQkFVd0F3RUIvekFmQmdOVkhTTUVHREFXZ0JTN3NONmhXRE9JbXFTS21kNit2ZXV2MnNza3F6QTNCZ05WSFI4RU1EQXVNQ3lnS3FBb2hpWm9kSFJ3T2k4dlkzSnNMbUZ3Y0d4bExtTnZiUzloY0hCc1pYSnZiM1JqWVdjekxtTnliREFPQmdOVkhROEJBZjhFQkFNQ0FRWXdFQVlLS29aSWh2ZGpaQVlDRGdRQ0JRQXdDZ1lJS29aSXpqMEVBd0lEWndBd1pBSXdPczl5ZzFFV21iR0crelhEVnNwaXYvUVg3ZGtQZFUyaWpyN3huSUZlUXJlSitKajNtMW1mbU5WQkRZK2Q2Y0wrQWpBeUxkVkVJYkNqQlhkc1hmTTRPNUJuL1JkOExDRnRsay9HY21tQ0VtOVUrSHA5RzVuTG13bUpJV0VHbVE4SmtoMEFBREdDQVlnd2dnR0VBZ0VCTUlHR01Ib3hMakFzQmdOVkJBTU1KVUZ3Y0d4bElFRndjR3hwWTJGMGFXOXVJRWx1ZEdWbmNtRjBhVzl1SUVOQklDMGdSek14SmpBa0JnTlZCQXNNSFVGd2NHeGxJRU5sY25ScFptbGpZWFJwYjI0Z1FYVjBhRzl5YVhSNU1STXdFUVlEVlFRS0RBcEJjSEJzWlNCSmJtTXVNUXN3Q1FZRFZRUUdFd0pWVXdJSVREQkJTVkdkVkRZd0N3WUpZSVpJQVdVREJBSUJvSUdUTUJnR0NTcUdTSWIzRFFFSkF6RUxCZ2txaGtpRzl3MEJCd0V3SEFZSktvWklodmNOQVFrRk1ROFhEVEl6TURVeU5ERTVNamMxTTFvd0tBWUpLb1pJaHZjTkFRazBNUnN3R1RBTEJnbGdoa2dCWlFNRUFnR2hDZ1lJS29aSXpqMEVBd0l3THdZSktvWklodmNOQVFrRU1TSUVJUGpNMllrZ3JvQzIvL3poSGdtazgwS25rTGxjeVpSVll0Mzh3WThMODUxUk1Bb0dDQ3FHU000OUJBTUNCRWN3UlFJZ0pkVTJzZDQ5SzNjcGxzb0FNcHBOb2xSMzZnNWt0ZWZsZVp1OUg0YThVVjhDSVFEamdrV3Q1WkQ3bjlVYUhwWnN2S2diZGt0TXE2TWhHNjBiUmVtWDhSbnFYd0FBQUFBQUFBPT0iLAogICAgICAgICAgICAgICAgICAgICAgICAiaGVhZGVyIjogewogICAgICAgICAgICAgICAgICAgICJwdWJsaWNLZXlIYXNoIjogInNWSitoejNKeWIwZUtDZTI3NmQwNVFIbVVGNUs5K0hDYWx6a1VCUFE5WUU9IiwKICAgICAgICAgICAgICAgICAgICAgICAgImVwaGVtZXJhbFB1YmxpY0tleSI6ICJNRmt3RXdZSEtvWkl6ajBDQVFZSUtvWkl6ajBEQVFjRFFnQUVPdWFiYUZBZTlVUWxIY2VOUk5ybGhlZitscFcvWHV3ay9zT210dEswaUN0MmhKcWdxaXEvYi9aRE4yUmp6UmxURVhXbEZBTWtNZjZPM2Y0Y3hLOXRVZz09IiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ0cmFuc2FjdGlvbklkIjogImM4MjExNDQzNDM3OGIzMzcyZDJjNzM5YjkxYzJkMDhkM2U3OTAzOGJjZDBjZmYzN2RiZjIyMGE1N2E5ZTY5Y2YiCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgInZlcnNpb24iOiAiRUNfdjEiCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgICJwYXltZW50TWV0aG9kIjogewogICAgICAgICAgICAgICAgImRpc3BsYXlOYW1lIjogIlZpc2EgMDIyNCIsCiAgICAgICAgICAgICAgICAgICAgIm5ldHdvcmsiOiAiVmlzYSIsCiAgICAgICAgICAgICAgICAgICAgICAgICJ0eXBlIjogImRlYml0IgogICAgICAgICAgICB9LAogICAgICAgICAgICAidHJhbnNhY3Rpb25JZGVudGlmaWVyIjogImM4MjExNDQzNDM3OGIzMzcyZDJjNzM5YjkxYzJkMDhkM2U3OTAzOGJjZDBjZmYzN2RiZjIyMGE1N2E5ZTY5Y2YiCiAgICAgICAgfQogICAgfQp9
+</code></pre></div>
+<h5 id="google-pay-token-example">Google Pay token example<a class="headerlink" href="#google-pay-token-example" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;apiVersionMinor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;apiVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;paymentMethodData&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Visa•••1111&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;tokenizationData&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PAYMENT_GATEWAY&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{\&quot;signature\&quot;:\&quot;MEYCIQDHUpR5xlu0wp0q3JdkYafwE0otpsRQ1ljF+FXHPXGdcAIhANIFbzZ3DVuNxAzDllI/AkW/lnM2NgrAEfrF+Cty38/8\&quot;,\&quot;intermediateSigningKey\&quot;:{\&quot;signedKey\&quot;:\&quot;{\\\&quot;keyValue\\\&quot;:\\\&quot;MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEJ66kcxuM0H1OBBzzsLjzSjlA5HShjK7MqaLNeggofGvcsH4KhKtfE4W4SIPXHRSJHeQsq+oO/vj4t4oBwaPEIA\\\\u003d\\\\u003d\\\&quot;,\\\&quot;keyExpiration\\\&quot;:\\\&quot;1708691731258\\\&quot;}\&quot;,\&quot;signatures\&quot;:[\&quot;MEQCIB7WCq8CS5M+XmVPw4fHn6MD/CbNYyEbOT/0+t/UqvFGAiB5qQkbfamdWzmUPcUlZZNp7iz8HIIEkqLoUhaeA5BXuQ\\u003d\\u003d\&quot;]},\&quot;protocolVersion\&quot;:\&quot;ECv2\&quot;,\&quot;signedMessage\&quot;:\&quot;{\\\&quot;encryptedMessage\\\&quot;:\\\&quot;Pqwy024PI3gbAd2+f3IRCgNM4s08yqdkrZu975/DW3hsG+RpG5NRJYjfukZaqpgZYzHGqjKcU9borN2HbCowxmPl+1ndXV6xa11/3LQg2aU1k09OipHyEEgUo3uGJpro115iktdKFSVf4A1Y8YNO+XqLJm8gMe5Q0Ro4mO6jZ7SU/sVxmPnJzPNAK/dNx2zV57H29ZMuf28F5xRk6+8ZoV4e+sgYbDCBvCLoQZmI3M++hFS6agMtJ/YkBDpTAnE+fBBgf3ST31W95IXYsDQf+iHmID8tk1/VKbf5jS3SJiRelV3sCSc/5aq9LiR/siKe0bNA4AjK5kHCee1VlMdOO8S4f+sVHd5vSJBW3WzP0DWha+xIV3f+JapPCX++bOUqtgvZaP1+q+Yg6MCTcPqKr/O0NsavdqHqm3gPW7IKXzbC8e46dPTcUwXB+Wirp0BQmVwNKUmHS1H5kgahJway3hj32P5GrNV8djer4n1BIw1uyfOF17rcXGvA8u/C4fNHaEM/hk2R7uO7OQ3iYWyo8GqJp2MmEqk3RdRh4snlkgFGFlzcntkSGmpv7WVQCchxX9d+9VEpIEgn\\\&quot;,\\\&quot;ephemeralPublicKey\\\&quot;:\\\&quot;BPLkfpYaBTDeIfkWIyWrHAHEmAM+PAV0dNXg23xep+nSh8tB4UDaYxs7Qmw3rnEs0qzuHY3njSoOBK7uewSaNMQ\\\\u003d\\\&quot;,\\\&quot;tag\\\&quot;:\\\&quot;G/2CnxBCjRLaeX2y66QV0Yln2OY/GNiV1zH/sKnQoaI\\\\u003d\\\&quot;}\&quot;}&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CARD&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;cardNetwork&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;VISA&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;cardDetails&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1111&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h5 id="base64-encoded-google-pay-token-example">Base64 encoded Google Pay token example<a class="headerlink" href="#base64-encoded-google-pay-token-example" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code>eyJhcGlWZXJzaW9uTWlub3IiOjAsImFwaVZlcnNpb24iOjIsInBheW1lbnRNZXRob2REYXRhIjp7ImRlc2NyaXB0aW9uIjoiVmlzYeKAhuKAouKAouKAouKAouKAhjExMTEiLCJ0b2tlbml6YXRpb25EYXRhIjp7InR5cGUiOiJQQVlNRU5UX0dBVEVXQVkiLCJ0b2tlbiI6IntcInNpZ25hdHVyZVwiOlwiTUVZQ0lRREhVcFI1eGx1MHdwMHEzSmRrWWFmd0Uwb3Rwc1JRMWxqRitGWEhQWEdkY0FJaEFOSUZielozRFZ1TnhBekRsbEkvQWtXL2xuTTJOZ3JBRWZyRitDdHkzOC84XCIsXCJpbnRlcm1lZGlhdGVTaWduaW5nS2V5XCI6e1wic2lnbmVkS2V5XCI6XCJ7XFxcImtleVZhbHVlXFxcIjpcXFwiTUZrd0V3WUhLb1pJemowQ0FRWUlLb1pJemowREFRY0RRZ0FFSjY2a2N4dU0wSDFPQkJ6enNManpTamxBNUhTaGpLN01xYUxOZWdnb2ZHdmNzSDRLaEt0ZkU0VzRTSVBYSFJTSkhlUXNxK29PL3ZqNHQ0b0J3YVBFSUFcXFxcdTAwM2RcXFxcdTAwM2RcXFwiLFxcXCJrZXlFeHBpcmF0aW9uXFxcIjpcXFwiMTcwODY5MTczMTI1OFxcXCJ9XCIsXCJzaWduYXR1cmVzXCI6W1wiTUVRQ0lCN1dDcThDUzVNK1htVlB3NGZIbjZNRC9DYk5ZeUViT1QvMCt0L1VxdkZHQWlCNXFRa2JmYW1kV3ptVVBjVWxaWk5wN2l6OEhJSUVrcUxvVWhhZUE1Qlh1UVxcdTAwM2RcXHUwMDNkXCJdfSxcInByb3RvY29sVmVyc2lvblwiOlwiRUN2MlwiLFwic2lnbmVkTWVzc2FnZVwiOlwie1xcXCJlbmNyeXB0ZWRNZXNzYWdlXFxcIjpcXFwiUHF3eTAyNFBJM2diQWQyK2YzSVJDZ05NNHMwOHlxZGtyWnU5NzUvRFczaHNHK1JwRzVOUkpZamZ1a1phcXBnWll6SEdxaktjVTlib3JOMkhiQ293eG1QbCsxbmRYVjZ4YTExLzNMUWcyYVUxazA5T2lwSHlFRWdVbzN1R0pwcm8xMTVpa3RkS0ZTVmY0QTFZOFlOTytYcUxKbThnTWU1UTBSbzRtTzZqWjdTVS9zVnhtUG5KelBOQUsvZE54MnpWNTdIMjlaTXVmMjhGNXhSazYrOFpvVjRlK3NnWWJEQ0J2Q0xvUVptSTNNKytoRlM2YWdNdEovWWtCRHBUQW5FK2ZCQmdmM1NUMzFXOTVJWFlzRFFmK2lIbUlEOHRrMS9WS2JmNWpTM1NKaVJlbFYzc0NTYy81YXE5TGlSL3NpS2UwYk5BNEFqSzVrSENlZTFWbE1kT084UzRmK3NWSGQ1dlNKQlczV3pQMERXaGEreElWM2YrSmFwUENYKytiT1VxdGd2WmFQMStxK1lnNk1DVGNQcUtyL08wTnNhdmRxSHFtM2dQVzdJS1h6YkM4ZTQ2ZFBUY1V3WEIrV2lycDBCUW1Wd05LVW1IUzFINWtnYWhKd2F5M2hqMzJQNUdyTlY4ZGplcjRuMUJJdzF1eWZPRjE3cmNYR3ZBOHUvQzRmTkhhRU0vaGsyUjd1TzdPUTNpWVd5bzhHcUpwMk1tRXFrM1JkUmg0c25sa2dGR0ZsemNudGtTR21wdjdXVlFDY2h4WDlkKzlWRXBJRWduXFxcIixcXFwiZXBoZW1lcmFsUHVibGljS2V5XFxcIjpcXFwiQlBMa2ZwWWFCVERlSWZrV0l5V3JIQUhFbUFNK1BBVjBkTlhnMjN4ZXArblNoOHRCNFVEYVl4czdRbXczcm5FczBxenVIWTNualNvT0JLN3Vld1NhTk1RXFxcXHUwMDNkXFxcIixcXFwidGFnXFxcIjpcXFwiRy8yQ254QkNqUkxhZVgyeTY2UVYwWWxuMk9ZL0dOaVYxekgvc0tuUW9hSVxcXFx1MDAzZFxcXCJ9XCJ9In0sInR5cGUiOiJDQVJEIiwiaW5mbyI6eyJjYXJkTmV0d29yayI6IlZJU0EiLCJjYXJkRGV0YWlscyI6IjExMTEifX19
+</code></pre></div>
+<h5 id="apple-pay-post-base64-encoded-encrypted-payment-response">Apple Pay post Base64 encoded encrypted payment response<a class="headerlink" href="#apple-pay-post-base64-encoded-encrypted-payment-response" title="Permanent link">&para;</a></h5>
+<p>In case payment was successfully processed single field <code>status</code> is returned in response.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;please wait for webhook&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>In case of failed payment response containing <code>error_response.result</code>: <code>"FAILURE"</code> is returned.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;error_response&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;response&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;gatewayCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ACQUIRER_SYSTEM_ERROR&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;threeDsRedirectUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FAILURE&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h5 id="google-pay-post-base64-encoded-encrypted-payment-response">Google Pay post Base64 encoded encrypted payment response<a class="headerlink" href="#google-pay-post-base64-encoded-encrypted-payment-response" title="Permanent link">&para;</a></h5>
+<p>In case of Google Pay payment depending on the buyer's device two different responses can be returned. In case payment was successfully processed single field <code>status</code> is returned in response.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;please wait for webhook&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>In case field <code>threeDsRedirectUrl</code> is returned in response customer should be redirected to this URL to pass 3DS authentication.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;merchant&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;******&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;order&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;amount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;creationTime&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1730440058.759529</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;currency&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EUR&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;10407955-21cb-475c-87bb-efe72541fb9d&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;lastUpdatedTime&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1730440058.75953</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;totalRefundedAmount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;totalAuthorizedAmount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;totalCapturedAmount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;totalDisbursedAmount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;merchantCurrency&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EUR&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;response&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;gatewayCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;APPROVED&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;threeDsRedirectUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;3DS redirect URL&gt;&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SUCCESS&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;transaction&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;10407955-21cb-475c-87bb-efe72541fb9d&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;amount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;currency&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EUR&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CAPTURE&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;retRefNr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;430605133628&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<p>In case of failed payment response containing <code>error_response.result</code>: <code>"FAILURE"</code> is returned.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;error_response&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;response&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;gatewayCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ACQUIRER_SYSTEM_ERROR&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;threeDsRedirectUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FAILURE&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../libraries/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Libraries">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Libraries
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../payment-methods/" class="md-footer__link md-footer__link--next" aria-label="Next: Supported payment methods">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Supported payment methods
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2021-2024 Klix
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/klix-app" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://lv.linkedin.com/company/klixapp" target="_blank" rel="noopener" title="lv.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "navigation.footer"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>
